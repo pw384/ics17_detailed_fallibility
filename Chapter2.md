@@ -3,6 +3,8 @@ Some worst details that I've encountered in ICS (pku17)
 
 Note: based on CS:APP(3eZN), Intel 64&IA32 Architectures Sofware Developer's Manual
 
+***
+
 ## Chapter 2  信息的表示
 
 ### 1. 整数运算
@@ -52,6 +54,9 @@ printf("%d\n",((0-2)<0)+0u==0u); //0
 即使外层是unsigned的比较，内层仍然是signed的比较，返回1，然后1强转成unsigned再比较，答案就是0
 
 
+#TODO work_in_progress
+
+
 ***以下待进一步实验与修改***
 
 
@@ -94,6 +99,10 @@ limit.c中是这样书写TMin32的：
 
 
 #### c. 整数运算没有单调性（例子太多了），但构成阿贝尔群
+
+
+***
+
 
 ### 2. 浮点运算
 
