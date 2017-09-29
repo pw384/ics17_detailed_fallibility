@@ -29,14 +29,14 @@ Note: based on CS:APP(3eZN), Intel 64&IA32 Architectures Sofware Developer's Man
 
 Case 1: 
 
-`
+```
 
 	unsigned x=1;
 	int y=2;
 	printf("%d\n",((x-2)<y));           // 0
 	printf("%d\n",((!x)-1<y));          // 1
 	
-`
+```
 
 一般情况下int和unsigned参与运算的话，有符号的会被隐含地转为无符号数。
 
@@ -45,27 +45,29 @@ Case 1:
 
 Case 2:
 
-`
+```
 
 	printf("%d\n",(2147483647+1==2147483648));    //0, with compiler's warning: Integer overflow in expression 2147483647+1
 	printf("%d\n",(2147483647+1==0x80000000));    //1, with compiler's warning: Integer overflow in expression 2147483647+1
-`
+```
 
 字面值的特性...
 
 
 Case 3:
-`
+
+```
 
   printf("%d\n",((0-2)<0)+0u==0u); //0
   
-`
+```
 
 即使外层是unsigned的比较，内层仍然是signed的比较，返回1，然后1强转成unsigned再比较，答案就是0
 
 
 Case 4:
-`
+
+```
 
 	printf("%lld\n",2147483648);                  //2147483648
 	printf("%lld\n",0x80000000);                  //2147483648
@@ -73,7 +75,7 @@ Case 4:
 	long x=100000000000;
 	printf("%lld\n",x);                           //1215752192, with compiler's warning: overflow in implicit constant conversion
 
-`
+```
 
 依旧是字面值的特性...
 
