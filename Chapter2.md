@@ -42,23 +42,28 @@ printf("%d\n",((!x)-1<y));          // 1
 **但是在C/C++语言中，!运算会把unsigned变为有符号数，所以上例第二行的输出是1。**
 
 
+
 Case 2:
-
-```c
-printf("%d\n",(2147483647+1==2147483648));    //0, with compiler's warning: Integer overflow in expression 2147483647+1
-printf("%d\n",(2147483647+1==0x80000000));    //1, with compiler's warning: Integer overflow in expression 2147483647+1
-```
-
-字面值的特性...
-
-
-Case 3:
 
 ```c
 printf("%d\n",((0-2)<0)+0u==0u); //0
 ```
 
 即使外层是unsigned的比较，内层仍然是signed的比较，返回1，然后1强转成unsigned再比较，答案就是0
+
+
+
+Case 3:
+
+```c
+printf("%d\n",(2147483647+1==2147483648));    //0, with compiler's warning: Integer overflow in expression 2147483647+1
+printf("%d\n",(2147483647+1==0x80000000));    //1, with compiler's warning: Integer overflow in expression 2147483647+1
+```
+
+字面值的特性...2147483648是long long（64位）
+
+*小技巧：这一点可以通过min(t,0)报的编译错误确定t的类型，其中t是一个表达式
+
 
 
 Case 4:
@@ -72,6 +77,18 @@ printf("%lld\n",x);                           //1215752192, with compiler's warn
 ```
 
 依旧是字面值的特性...
+
+
+
+Case 5: 
+
+limit.c中是这样书写TMin32的：
+
+```c
+#define INT_MAX 2147483647
+#define INT_MIN (-INT_MAX-1)
+```
+
 
 
 #### c. 整数运算没有单调性（例子太多了），但构成阿贝尔群
