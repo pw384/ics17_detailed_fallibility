@@ -110,7 +110,7 @@ second operand (count operand). Bits shifted beyond the destination operand boun
 flag**, then discarded. At the end of the shift operation, the CF flag contains the last bit shifted out of the destination
 operand.
 
-* 移位操作对于OF的行为，在CS:APP(3e, 3eZN)上的说法与Intel手册不同，Intel手册给出的规则略复杂，下面给出，仅供参考：
+* 移位操作对于OF的行为，在CS:APP(3e, 3eZN)上的说法与Intel手册不同，Intel手册给出的规则略复杂，下面给出，仅供参考（实验证实，CSAPP上讲错了【手动捂脸】）：
 >对于移位操作，溢出标志设置为0。 (CS:APP 3eZN p. 136)
 
 vs.
