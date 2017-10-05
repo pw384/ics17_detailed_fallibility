@@ -20,11 +20,11 @@ Note: based on CS:APP(3eZN), Intel 64&IA32 Architectures Sofware Developer's Man
 | 5         | **i<<j**  **i>>j**                             |
 | 4         | i<j  i<=j  i>j  i>=j                   |
 | 3         | i==j  i!=j                             |
-| 2.2       | i&j                                    |
-| 2.1       | i^j                                    |
-| 2.0       | i|j                                    |
-| 1.1       | i&&j                                   |
-| 1.0       | i||j                                   |
+| 2.2       | i & j                                    |
+| 2.1       | i ^ j                                    |
+| 2.0       | i | j                                    |
+| 1.1       | i & & j                                   |
+| 1.0       | i | | j                                   |
 
 
 #### b. 强制类型转化
