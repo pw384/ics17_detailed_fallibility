@@ -74,6 +74,8 @@ Note: based on CS:APP(3eZN), Intel 64&IA32 Architectures Software Developer's Ma
 
 #### c. lea指令与算术运算指令
 
+注意操作数/比较顺序
+
 lea指令与mov指令的不同？  
 * lea S,D 将S算出的内存的地址传入D，即 * D = S
 * mov S,D 将S算出的内存的内容传入D，即 * D = * S
@@ -104,13 +106,14 @@ cs:app 3eZN 在133页的图3-12中有两处错误，emmmm
 一般情况下，算术运算指令都改变条件码，但有以下注意需要的地方：
 * lea不改变条件码（因为它在intel手册上不算作算术运算）  
 * 所有逻辑操作都会把CF和OF设为0，包括test
+* inc和dec指令**不改变**CF
 * 移位操作会把CF设为最后一个被移出的位（无论左移还是右移）
 > Shifts the bits in the first operand (destination operand) to the left or right by the number of bits specified in the
 second operand (count operand). Bits shifted beyond the destination operand boundary **are first shifted into the CF
 flag**, then discarded. At the end of the shift operation, the CF flag contains the last bit shifted out of the destination
 operand.
 
-* 移位操作对于OF的行为，在CS:APP(3e, 3eZN)上的说法与Intel手册不同，Intel手册给出的规则略复杂，下面给出，仅供参考（实验证实，CSAPP上讲错了【手动捂脸】）：
+* 移位操作对于OF的行为，在CS:APP(3e, 3eZN)上的说法与Intel手册不同，Intel手册给出的规则略复杂，下面给出，仅供参考：
 >对于移位操作，溢出标志设置为0。 (CS:APP 3eZN p. 136)
 
 vs.
@@ -142,19 +145,48 @@ IF (COUNT and countMASK) = 1
     FI;
 FI;
 ```
-* inc和dec指令**不改变**CF
+
 
 <br /><br />
 
-#### b. 条件跳转
+#### b. 条件跳转与条件传送
 
-#TODO
+set指令
+* set指令只设置目标的低字节，或是内存中的一个地址，因此当目标是寄存器的时候，之后会跟上零拓展以清除高位
+* 图3-14
+
+j指令
+* j在机器级的编码中，实际跳转地址是之后的参数+PC，例如  
+```
+4004d0: 48 89 f8			mov		%rdi,%rax
+4004d3: eb 03					jmp		4004d8<loop+0x8>
+4004d5: 48 d1 f8			sar		%rax
+4004d8: 48 85 c0			test	%rax,%rax
+4004db: 7f f8					jg		4004d5<loop+0x5>
+4004dd: f3 c3					repz retq
+```
+程序进行到第五行时，开始跳转，跳转位置为0xf8(-8)+**0x4004dd**=0x4004d5，注意当程序走到第五行进行跳转之前，PC指向该指令的下一条指令，即第六行的开头
+* rep是啥？空操作，但可以使得处理器正确预测之后ret指令的目的，加快速度（3eZN p141）
+
+有时使用条件传送而不使用条件跳转的原因 p. 146
+
+条件跳转的副作用：p. 148
+
+
+
+<br /><br />
+
+#### c. 循环与开关
+
+C语言中，`for(INIT;TEST;ITER) BODY;` 与 `INIT;while(TEST){BODY;ITER;}` 并不等价，因为for循环中continue指令并不会跳过 `ITER`
 
 <br /><br />
 
 ***
 
 ### 4. 过程
+
+#TODO
 
 ### 5. 数组与结构
 
