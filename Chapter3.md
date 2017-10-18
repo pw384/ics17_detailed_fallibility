@@ -5,6 +5,8 @@ Note: based on CS:APP(3eZN), Intel 64&IA32 Architectures Software Developer's Ma
 
 Mainly focused on x86-64
 
+哎，我说，我似乎看得太细了，所以有的东西当闲着没事干的笑话看看好了（雾
+
 ***
 
 
@@ -211,8 +213,6 @@ x86-64中，函数的第二个参数存在%rsi中 ← 该说法错误，应为x8
 注意参数入栈顺序，压栈先压后面的参数（注意图3-25）
 
 x86-64中，栈上**传参**按8对齐
-
-*struct如何传参？*
 
 <br /><br />
 
