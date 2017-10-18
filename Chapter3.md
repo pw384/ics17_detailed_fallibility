@@ -10,7 +10,7 @@ Mainly focused on x86-64
 ***
 
 
-## Chapter 3  程序的机器级表示 (work in progress)
+## Chapter 3  程序的机器级表示
 
 ### 1. 寄存器、数据格式
 
