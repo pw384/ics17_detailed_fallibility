@@ -43,7 +43,7 @@ printf("%d\n",((!x)-1<y));          // 1
 
 **但是在C/C++语言中，!运算会把unsigned变为有符号数，所以上例第二行的输出是1。**
 
-
+<br />
 
 Case 2:
 
@@ -53,50 +53,34 @@ printf("%d\n",((0-2)<0)+0u==0u); //0
 
 即使外层是unsigned的比较，内层仍然是signed的比较，返回1，然后1强转成unsigned再比较，答案就是0
 
-
-#TODO work_in_progress
-
-
-***以下待进一步实验与修改***
-
+<br />
 
 Case 3:
 
 ```c
-printf("%d\n",(2147483647+1==2147483648));    //0, with compiler's warning: Integer overflow in expression 2147483647+1
-printf("%d\n",(2147483647+1==0x80000000));    //1, with compiler's warning: Integer overflow in expression 2147483647+1
-```
-
-字面值的特性...2147483648是long long（64位）
-
-*小技巧：这一点可以通过min(t,0)报的编译错误确定t的类型，其中t是一个表达式*
-
-
-
-Case 4:
-
-```c
-printf("%lld\n",2147483648);                  //2147483648
-printf("%lld\n",0x80000000);                  //2147483648
-printf("%lld\n",100000000000);                //100000000000
-long x=100000000000;
-printf("%lld\n",x);                           //1215752192, with compiler's warning: overflow in implicit constant conversion
-```
-
-依旧是字面值的特性...
-
-
-
-Case 5: 
-
-limit.c中是这样书写TMin32的：
-
-```c
 #define INT_MAX 2147483647
-#define INT_MIN (-INT_MAX-1)
+#define INT_MIN -INT_MAX - 1
 ```
 
+C规定字面值为一串数字\[ +u/U\] +\[/l/L\]，`-2147483648`并不是字面值，而是一个**字面值表达式**。
 
+-2147483648最终的类型为：
+|字长|ISO C90|ISO C99|
+|-|-|-|
+|32|unsigned|long long|
+|64|long|long|
+
+```c
+int dcomp = (-2147483648 < 0); // 答案不固定
+int hcomp = (0x80000000 < 0); // 永远是0
+```
+
+```c
+int dtmin = -2147483648; 
+int dcomp2 = (dtmin < 0); // 永远是1
+int htmin = 0x80000000; 
+int hcomp2 = (htmin < 0); // 永远是1
+```
 
 #### c. 整数运算没有单调性（例子太多了），但构成阿贝尔群
 
